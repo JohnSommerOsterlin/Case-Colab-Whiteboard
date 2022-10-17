@@ -6,7 +6,7 @@ import { WebSocketServer } from "ws";
 // creating websocket server
 const wss = new WebSocketServer({noServer: true});
 const app = express();
-app.use(express.static("../client/whiteboard/build"))
+app.use(express.static("../client/whiteboard/build"));
 const port = 8080;
 const expressServer = app.listen(port, () => console.log(`Listening on port ${port}`));
 
