@@ -25,8 +25,19 @@ wss.on("connection", (ws, request, client) => {
 
     
     ws.on("message", function message(data) {
-        console.log("recieved: %s", data);
-        ws.send("Thank you for your message!")
+        const obj = JSON.parse(data);
+        console.log("recieved: %s", obj.type);
+        switch (obj.type) {
+            case "paint":
+                {
+                    console.log("Broadcasting:", obj);
+                    wss.clients.forEach((client) => client.send(JSON.stringify(obj)));
+                }
+                break;
+                default:
+                    console.log("Default")
+        }
+        // ws.send("Thank you for your message!")
     });
 
     // close event
