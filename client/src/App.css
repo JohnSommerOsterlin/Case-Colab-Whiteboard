@@ -1,11 +1,13 @@
 .container {
+    width: 100vw;
+    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: rgb(187, 187, 206);
 }
 canvas {
-    /* margin: 2% auto; */
-    /* width: 100rem; */
-    /* height: 50rem; */
-    border: 10px solid black;
+    box-shadow: 4px 4px 20px -3px rgba(0,0,0,0.75);
+    background-color: white;
+    border-radius: 10px;
 }
