@@ -5,10 +5,9 @@ import "./board.css"
 const ws = new WebSocket("ws://localhost:8080")
 
 export default function Board() {
-    
-    
-    
+
     let paintObj = {
+        color: "black",
         type: "paint",
         coordinates: [],
     }
@@ -18,17 +17,16 @@ export default function Board() {
     const canvasRef = useRef(null)
     const contextRef = useRef(null)
     const [isDrawing, setIsDrawing] = useState(false)
+    // const [color, setColor] = useState("")
+    
     
     ws.onclose = (evt) => console.log("Closing", evt);
     ws.onopen = (evt) => console.log("Open", evt);
     ws.onmessage = (evt) => {
         const obj = JSON.parse(evt.data);
-        // console.log(`Message incoming: ${JSON.stringify(obj)}`)
         switch (obj.type) {
             case "paint":
-                // const coordinates = message.payload;
-                paintLine(contextRef, obj.coordinates)
-                
+                paintLine(contextRef, obj.coordinates)                
                 break;
                 default:
                     console.log("default case")
@@ -36,14 +34,14 @@ export default function Board() {
                 };
             };
             
-            function paintLine(context, coordinates ) {
+            function paintLine(context, coordinates) {
                 context.current.beginPath()
                 coordinates.forEach(e => {
                     console.log(e)
-                    context.current.beginPath()
                     context.current.moveTo(e.x, e.y)
                     context.current.lineTo(e.x, e.y)
                     context.current.stroke()
+                    context.current.beginPath()
                 });
             }
     
@@ -60,6 +58,12 @@ export default function Board() {
         
         
     }, []);
+
+    
+    // const colorPicker = () => {
+    //     const [color, setColor] = useState(null)
+    //     console.log("colorPicker", color);
+    // }
 
     const startDrawing = ({nativeEvent}) => {
         const {offsetX, offsetY} = nativeEvent;
@@ -81,7 +85,6 @@ export default function Board() {
         contextRef.current.stroke();
         nativeEvent.preventDefault();
 
-        // console.log(paintObj.coordinates);
         let coordinates = {x: nativeEvent.offsetX, y: nativeEvent.offsetY}
         paintObj.coordinates.push(coordinates)
     };
@@ -112,13 +115,13 @@ export default function Board() {
                 onMouseUp={stopDrawing}
                 onMouseLeave={stopDrawing}
             >
-
             </canvas>
-            <div>
-                <button onClick={setToDraw}>
+            <div className='btn-color-container'>
+                <input className='color-picker' type="color" id="color" />
+                <button className='draw-btn' onClick={setToDraw}>
                     Draw
                 </button>
-                <button onClick={setToErase}>
+                <button className='erase-btn' onClick={setToErase}>
                     Erase
                 </button>
             </div>
