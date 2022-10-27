@@ -7,10 +7,10 @@
 Download this repository as a zip file or clone it in the terminal with  `git clone "ENTER URL OF THE REPOSITORY"`
 
 # Step 2
-Open up a new terminal and navigate to `./case-colab-whiteboard/client` with `cd .\case-colab-whiteboard\client\` and run the following command `npm start` and wait for it to start up.
+Open up a new terminal and navigate to `./case-colab-whiteboard/client` with the command line - `cd .\case-colab-whiteboard\client\`. Hit enter and then run the following command `npm start` and wait for it to start up.
 
 # Step 3
-Open up one more terminal and navigate in to `./server` with `cd .\case-colab-whiteboard\server\` and then run the following command `node server.mjs` 
+Open up one more terminal and navigate in to `./case-colab-whiteboard/server` with the command line - `cd .\case-colab-whiteboard\server\`. Hit enter and then run the following command `node server.mjs` 
 
 It should look a little something like this: 
 (https://i.gyazo.com/b64b72db217ee0b27cf975863d739c6b.png)
