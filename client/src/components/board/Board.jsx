@@ -14,7 +14,7 @@ export default function Board() {
   const canvasRef = useRef(null);
   const contextRef = useRef(null);
   const [isDrawing, setIsDrawing] = useState(false);
-  // const [color, setColor] = useState("")
+  const [color, setColor] = useState("")
 
   ws.onclose = (evt) => console.log("Closing", evt);
   ws.onopen = (evt) => console.log("Open", evt);
@@ -22,15 +22,16 @@ export default function Board() {
     const obj = JSON.parse(evt.data);
     switch (obj.type) {
       case "paint":
-        paintLine(contextRef, obj.coordinates);
+        paintLine(contextRef, obj.coordinates, obj.color);
         break;
       default:
         console.log("default case");
     }
   };
 
-  function paintLine(context, coordinates) {
+  function paintLine(context, coordinates, color) {
     context.current.beginPath();
+    context.current.strokeStyle = color;
     coordinates.forEach((e) => {
       console.log(e);
       context.current.moveTo(e.x, e.y);
@@ -51,14 +52,15 @@ export default function Board() {
     contextRef.current = context;
   }, []);
 
-  // const colorPicker = () => {
-  //     const [color, setColor] = useState(null)
-  //     console.log("colorPicker", color);
-  // }
+  const colorPicker = (e) => {
+    setColor(e.target.value)
+    console.log("Selected color: ", e.target.value)
+  }
 
   const startDrawing = ({ nativeEvent }) => {
     const { offsetX, offsetY } = nativeEvent;
     contextRef.current.beginPath();
+    contextRef.current.strokeStyle = color;
     contextRef.current.moveTo(offsetX, offsetY);
     contextRef.current.lineTo(offsetX, offsetY);
     contextRef.current.stroke();
@@ -82,6 +84,7 @@ export default function Board() {
   const stopDrawing = () => {
     contextRef.current.closePath();
     setIsDrawing(false);
+    paintObj.color = color;
     ws.send(JSON.stringify(paintObj));
   };
 
@@ -115,7 +118,12 @@ export default function Board() {
         onMouseLeave={stopDrawing}
       ></canvas>
       <div className="btn-color-container">
-        <input className="color-picker" type="color" id="color" />
+        <input 
+        onChange={colorPicker} 
+        className="color-picker" 
+        type="color" 
+        id="color" 
+        value={color} />
         <button className="draw-btn" onClick={setToDraw}>
           Draw
         </button>
