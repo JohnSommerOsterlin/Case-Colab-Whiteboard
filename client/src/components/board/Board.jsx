@@ -88,16 +88,6 @@ export default function Board() {
     ws.send(JSON.stringify(paintObj));
   };
 
-  const reset = () => {
-    contextRef.current.clearRect(
-      10,
-      10,
-      contextRef.current.width,
-      contextRef.current.height
-    );
-    console.log("clicked");
-  };
-
   return (
     <div>
       <canvas
