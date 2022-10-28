@@ -88,15 +88,6 @@ export default function Board() {
     ws.send(JSON.stringify(paintObj));
   };
 
-  const setToDraw = () => {
-    contextRef.current.globalCompositeOperation = "source-over";
-  };
-
-  // const setToErase = () => {
-  //     contextRef.current.globalCompositeOperation = "destination-out"
-
-  // };
-
   const reset = () => {
     contextRef.current.clearRect(
       10,
@@ -124,12 +115,6 @@ export default function Board() {
         type="color" 
         id="color" 
         value={color} />
-        <button className="draw-btn" onClick={setToDraw}>
-          Draw
-        </button>
-        <button className="erase-btn" onClick={reset}>
-          Reset
-        </button>
       </div>
     </div>
   );
